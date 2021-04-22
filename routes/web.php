@@ -28,3 +28,5 @@ Route::post('/profile/update', 'HomeController@updateProfile')->name('update.pro
 Route::get('/squad', 'HomeController@squad')->name('view.squad');
 Route::get('/training/add', 'HomeController@addTraining')->name('add.training');
 Route::post('/training/store', 'HomeController@storeTraining')->name('store.training');
+Route::get('/raceresult/add', 'HomeController@addRaceResult')->name('add.raceresult');
+Route::post('/raceresult/store', 'HomeController@storeRaceResult')->name('store.raceresult');

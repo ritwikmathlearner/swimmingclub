@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Race;
 use App\Training;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -121,5 +123,23 @@ class HomeController extends Controller
         ]);
         Training::create($validatedData);
         return redirect('/squad');
+    }
+
+    public function addRaceResult()
+    {
+        $races = Race::all();
+        $participants = User::role(['Child', 'Swimmer'])->get();
+        return view('race.raceresultadd', compact(['races', 'participants']));
+    }
+
+    public function storeRaceResult(Request $request)
+    {
+        $validatedData = $request->validate([
+            'race_id' => 'required|exists:races,id',
+            'user_id' => 'required|exists:users,id|unique:race_user,user_id,NULL,race_id'.$request->race_id,
+            'points' => 'required|in:0,1'
+        ]);
+        DB::table('race_user')->insert($validatedData);
+        return redirect('/home');
     }
 }

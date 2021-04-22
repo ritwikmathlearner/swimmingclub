@@ -45,6 +45,9 @@
                         @if(Auth::user()->hasRole('Coach'))
                             <a href="{{ route('view.squad') }}">View Squad</a>
                         @endif
+                        @if(Auth::user()->hasRole('Club Administrator'))
+                            <a href="{{ route('add.raceresult') }}">Add Race Result</a>
+                        @endif
                     </div>
                 </div>
             </div>
